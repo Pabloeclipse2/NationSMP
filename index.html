@@ -3,288 +3,259 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NationsSMP — Claim your ground.</title>
+<title>NationSMP — Play Now</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-minecraft/index.css">
 <style>
-  :root{
-    --ink:#0B1220;
-    --panel:#121B29;
-    --panel-2:#17222F;
-    --brass:#C9A227;
-    --brass-dim:#8C7220;
-    --signal:#B5432B;
-    --parchment:#EDE6D6;
-    --parchment-dim:#B9B2A0;
-    --steel:#4C5A68;
-    --line: rgba(201,162,39,0.18);
+  :root {
+    --ink: #0B1220;
+    --panel: #121B29;
+    --panel-2: #1c293c;
+    --brass: #e3bb34;
+    --brass-dim: #8C7220;
+    --parchment: #f4eee1;
+    --parchment-dim: #9ca3af;
+    --steel: #4C5A68;
+    --line: rgba(227, 187, 52, 0.15);
+    --green: #4A7A2C;
+    --glow: rgba(227, 187, 52, 0.2);
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--ink);
-    color:var(--parchment);
-    font-family:'Source Serif 4', Georgia, serif;
-    line-height:1.6;
-    overflow-x:hidden;
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Source Serif 4', Georgia, serif;
+    line-height: 1.6;
+    overflow-x: hidden;
   }
-  .display{
-    font-family:'Oswald', sans-serif;
-    text-transform:uppercase;
-    letter-spacing:0.04em;
-  }
-  .mono{
-    font-family:'JetBrains Mono', monospace;
-  }
-  a{color:var(--brass); text-decoration:none;}
-  .wrap{max-width:1080px; margin:0 auto; padding:0 32px;}
+  
+  .mc { font-family: 'Minecraft', monospace; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  a { color: var(--brass); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: #fff; }
+  
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
 
-  /* topographic backdrop */
-  .topo{
-    position:absolute; inset:0; z-index:0; opacity:0.35;
-    background-image:
-      repeating-radial-gradient(circle at 20% 30%, transparent 0, transparent 38px, var(--line) 39px, transparent 40px, transparent 78px, var(--line) 79px, transparent 80px),
-      repeating-radial-gradient(circle at 82% 68%, transparent 0, transparent 46px, var(--line) 47px, transparent 48px, transparent 94px, var(--line) 95px, transparent 96px);
-    pointer-events:none;
+  /* Topbar */
+  .topbar {
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0;
+  }
+  .topbar-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .topbar-ip { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .ip-tag {
+    font-family: 'Minecraft', monospace; font-size: 13px;
+    background: var(--brass); color: var(--ink); padding: 6px 12px;
+    border-radius: 2px;
+  }
+  .ip-desc { font-size: 14px; color: var(--parchment-dim); }
+  .topbar-btn {
+    font-family: 'Minecraft', monospace; font-size: 12px;
+    background: var(--green); color: #EAF4E0; padding: 9px 18px;
+    border: none; cursor: pointer; border-radius: 2px;
+    transition: all 0.2s ease;
+  }
+  .topbar-btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
+
+  /* Header / Nav */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(11, 18, 32, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav {
+    max-width: 1080px; margin: 0 auto; padding: 16px 32px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  .brand { font-family: 'Minecraft', monospace; font-size: 16px; color: var(--parchment); letter-spacing: 0.05em; }
+  .brand span { color: var(--brass); }
+  
+  .navlinks { display: flex; gap: 4px; flex-wrap: wrap; }
+  .navlink {
+    font-family: 'Minecraft', monospace; font-size: 11px;
+    color: var(--parchment-dim); background: transparent; border: 1px solid transparent;
+    padding: 10px 16px; cursor: pointer; letter-spacing: 0.02em;
+    border-radius: 4px; transition: all 0.3s ease;
+  }
+  .navlink:hover { color: var(--brass); background: rgba(255,255,255,0.03); }
+  .navlink.active { color: var(--ink); background: var(--brass); box-shadow: 0 0 10px var(--glow); }
+
+  /* Panels & Animation */
+  .panel {
+    display: none; 
+    padding: 70px 0;
+  }
+  .panel.active {
+    display: block;
+    animation: fadeSlideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  
+  @keyframes fadeSlideUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
-  /* NAV */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(11,18,32,0.92);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--line);
+  /* Typography */
+  .eyebrow {
+    display: inline-block; font-family: 'Minecraft', monospace; font-size: 11px;
+    color: var(--brass); border: 1px solid var(--brass-dim); padding: 6px 14px; margin-bottom: 24px;
+    border-radius: 2px; letter-spacing: 0.05em;
   }
-  nav{
-    max-width:1080px; margin:0 auto; padding:18px 32px;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .brand{
-    font-family:'Oswald', sans-serif; font-weight:700; font-size:20px;
-    letter-spacing:0.08em; color:var(--parchment);
-  }
-  .brand span{color:var(--brass);}
-  .navlinks{display:flex; gap:28px; font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:0.08em; text-transform:uppercase;}
-  .navlinks a{color:var(--parchment-dim); transition:color 0.15s;}
-  .navlinks a:hover{color:var(--brass);}
+  h1 { font-family: 'Minecraft', monospace; font-size: clamp(26px, 4.5vw, 44px); color: var(--parchment); line-height: 1.3; margin-bottom: 20px; }
+  h1 .accent { color: var(--brass); text-shadow: 0 0 20px var(--glow); }
+  h2 { font-family: 'Minecraft', monospace; font-size: clamp(20px, 3vw, 28px); color: var(--parchment); margin-bottom: 18px; }
+  h3 { font-family: 'Minecraft', monospace; font-size: 16px; color: var(--brass); margin-bottom: 10px; }
+  .lede { font-size: 19px; color: var(--parchment-dim); max-width: 600px; margin-bottom: 36px; font-style: italic; }
+  .section-desc { color: var(--parchment-dim); max-width: 620px; font-size: 16px; margin-bottom: 44px; }
 
-  /* HERO */
-  .hero{
-    position:relative;
-    padding:120px 0 90px;
-    border-bottom:1px solid var(--line);
-    overflow:hidden;
+  /* Buttons */
+  .btn {
+    font-family: 'Minecraft', monospace; font-size: 12px;
+    padding: 14px 26px; border: 1px solid var(--brass); display: inline-block; cursor: pointer;
+    border-radius: 2px; transition: all 0.2s ease; letter-spacing: 0.05em;
   }
-  .hero-inner{position:relative; z-index:1;}
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:10px;
-    font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.12em;
-    color:var(--brass); border:1px solid var(--brass-dim);
-    padding:6px 14px; margin-bottom:28px;
-  }
-  .eyebrow::before{content:''; width:6px; height:6px; background:var(--brass); display:inline-block; animation:pulse 2s infinite;}
-  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
-  h1{
-    font-size:clamp(48px, 8vw, 92px);
-    font-weight:700;
-    line-height:0.95;
-    color:var(--parchment);
-    margin-bottom:22px;
-  }
-  h1 .accent{color:var(--brass);}
-  .lede{
-    font-size:19px; color:var(--parchment-dim); max-width:560px; margin-bottom:44px;
-    font-style:italic;
-  }
-  .coord-box{
-    display:inline-flex; align-items:center; gap:0;
-    border:1px solid var(--brass-dim);
-    background:var(--panel);
-    margin-bottom:36px;
-  }
-  .coord-label{
-    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em;
-    color:var(--parchment-dim); padding:14px 16px; border-right:1px solid var(--line);
-  }
-  .coord-value{
-    font-family:'JetBrains Mono',monospace; font-size:17px; font-weight:500;
-    color:var(--brass); padding:14px 18px;
-  }
-  .copy-btn{
-    font-family:'JetBrains Mono',monospace; font-size:12px;
-    background:var(--brass); color:var(--ink); border:none;
-    padding:14px 18px; cursor:pointer; letter-spacing:0.06em;
-    transition:background 0.15s;
-  }
-  .copy-btn:hover{background:#DDB744;}
-  .cta-row{display:flex; gap:16px; flex-wrap:wrap;}
-  .btn{
-    font-family:'Oswald',sans-serif; font-size:14px; letter-spacing:0.08em;
-    text-transform:uppercase; padding:15px 30px;
-    border:1px solid var(--brass); transition:all 0.15s;
-    display:inline-block;
-  }
-  .btn-primary{background:var(--brass); color:var(--ink);}
-  .btn-primary:hover{background:#DDB744;}
-  .btn-ghost{color:var(--parchment); border-color:var(--steel);}
-  .btn-ghost:hover{border-color:var(--brass); color:var(--brass);}
+  .btn-primary { background: var(--brass); color: var(--ink); box-shadow: 0 0 15px var(--glow); }
+  .btn-primary:hover { background: #ffe066; transform: translateY(-2px); box-shadow: 0 4px 20px var(--glow); }
+  .btn-ghost { color: var(--parchment); border-color: var(--steel); background: transparent; }
+  .btn-ghost:hover { border-color: var(--brass); color: var(--brass); background: rgba(227, 187, 52, 0.05); transform: translateY(-2px); }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
 
-  /* SECTION LABEL */
-  .section{padding:90px 0; border-bottom:1px solid var(--line); position:relative;}
-  .section-label{
-    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em;
-    color:var(--brass); margin-bottom:14px; text-transform:uppercase;
+  /* Grids */
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 20px; }
+  .cat-card {
+    background: var(--panel); padding: 32px 24px; text-align: left; cursor: pointer;
+    border: 1px solid var(--line); color: inherit; font-family: inherit; border-radius: 6px;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative; overflow: hidden;
   }
-  h2{
-    font-family:'Oswald',sans-serif; font-weight:600; font-size:clamp(28px,4vw,42px);
-    text-transform:uppercase; letter-spacing:0.02em; color:var(--parchment);
-    margin-bottom:20px; max-width:640px;
+  .cat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+    background: var(--brass); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease;
   }
-  .section-desc{color:var(--parchment-dim); max-width:600px; font-size:17px; margin-bottom:56px;}
+  .cat-card:hover { background: var(--panel-2); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+  .cat-card:hover::before { transform: scaleX(1); }
+  
+  .cat-tag { font-family: 'Minecraft', monospace; font-size: 10px; color: var(--brass-dim); margin-bottom: 14px; letter-spacing: 0.1em; }
+  .cat-title { font-family: 'Minecraft', monospace; font-size: 15px; color: var(--parchment); margin-bottom: 12px; }
+  .cat-desc { font-size: 14px; color: var(--parchment-dim); line-height: 1.6; }
 
-  /* TERRITORY STATS */
-  .stat-grid{
-    display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:1px; background:var(--line); border:1px solid var(--line);
+  /* Stats */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 48px; border-radius: 4px; overflow: hidden; }
+  .stat { background: var(--panel); padding: 24px 20px; text-align: center; }
+  .stat-num { font-family: 'Minecraft', monospace; font-size: 24px; color: var(--brass); text-shadow: 0 0 10px var(--glow); }
+  .stat-label { font-family: 'Minecraft', monospace; font-size: 10px; color: var(--parchment-dim); margin-top: 8px; letter-spacing: 0.05em; }
+
+  /* Steps */
+  .steps { counter-reset: step; max-width: 680px; margin-top: 20px; }
+  .step { display: grid; grid-template-columns: 56px 1fr; gap: 20px; padding: 32px 0; border-bottom: 1px solid var(--line); transition: transform 0.2s ease; }
+  .step:hover { transform: translateX(5px); }
+  .step:last-child { border-bottom: none; }
+  .step-num { counter-increment: step; font-family: 'Minecraft', monospace; font-size: 14px; color: var(--brass); background: rgba(227, 187, 52, 0.1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+  .step-num::before { content: "0" counter(step); }
+  .step-title { font-family: 'Minecraft', monospace; font-size: 14px; color: var(--parchment); margin-bottom: 8px; letter-spacing: 0.02em; }
+  .step-desc { color: var(--parchment-dim); font-size: 15px; line-height: 1.7; }
+  .step-desc strong { color: var(--parchment); font-weight: 600; }
+  .step-desc code { font-family: 'JetBrains Mono', monospace; color: var(--brass); background: rgba(0,0,0,0.3); padding: 3px 8px; font-size: 13px; border-radius: 4px; border: 1px solid var(--line); }
+
+  /* Warning Box */
+  .warn-box {
+    border: 1px solid var(--brass-dim); background: rgba(227, 187, 52, 0.05); padding: 24px;
+    margin-top: 32px; max-width: 680px; border-radius: 6px; border-left: 4px solid var(--brass);
   }
-  .stat{background:var(--ink); padding:28px 24px;}
-  .stat-num{font-family:'JetBrains Mono',monospace; font-size:30px; font-weight:700; color:var(--brass);}
-  .stat-label{font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--parchment-dim); margin-top:8px;}
+  .warn-box .mc { font-size: 12px; color: var(--brass); margin-bottom: 8px; display: block; letter-spacing: 0.05em; }
 
-  /* SYSTEMS GRID */
-  .systems{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line);}
-  .system-card{background:var(--panel); padding:32px 28px; transition:background 0.15s;}
-  .system-card:hover{background:var(--panel-2);}
-  .system-num{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--brass-dim); margin-bottom:16px;}
-  .system-title{font-family:'Oswald',sans-serif; font-weight:600; font-size:19px; text-transform:uppercase; letter-spacing:0.02em; color:var(--parchment); margin-bottom:10px;}
-  .system-desc{font-size:15px; color:var(--parchment-dim); line-height:1.65;}
+  /* Footer */
+  footer { padding: 48px 0; text-align: center; border-top: 1px solid var(--line); background: var(--panel); margin-top: 40px; }
+  .footer-mark { font-family: 'Minecraft', monospace; font-size: 11px; color: var(--steel); letter-spacing: 0.1em; }
 
-  /* FIELD MANUAL - numbered, genuine sequence */
-  .steps{counter-reset:step; max-width:680px;}
-  .step{
-    display:grid; grid-template-columns:64px 1fr; gap:24px;
-    padding:28px 0; border-bottom:1px solid var(--line);
-  }
-  .step:last-child{border-bottom:none;}
-  .step-num{
-    counter-increment:step;
-    font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--brass);
-  }
-  .step-num::before{content:"0" counter(step);}
-  .step-title{font-family:'Oswald',sans-serif; font-weight:600; font-size:16px; text-transform:uppercase; letter-spacing:0.03em; color:var(--parchment); margin-bottom:6px;}
-  .step-desc{color:var(--parchment-dim); font-size:15px;}
-  .step-desc code{font-family:'JetBrains Mono',monospace; color:var(--brass); background:var(--panel); padding:2px 6px; font-size:13px;}
-
-  /* COMMS / footer CTA */
-  .comms{text-align:center; padding:100px 0;}
-  .comms h2{margin:0 auto 20px; }
-  .comms-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:36px;}
-
-  footer{padding:36px 0; text-align:center;}
-  .footer-mark{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--steel); letter-spacing:0.06em;}
-
-  @media (max-width:640px){
-    nav{flex-direction:column; gap:14px; align-items:flex-start;}
-    .coord-box{flex-direction:column; width:100%;}
-    .coord-label,.coord-value,.copy-btn{border:none; border-bottom:1px solid var(--line); width:100%;}
-    .step{grid-template-columns:1fr;}
+  @media (max-width: 640px) {
+    .topbar-inner { flex-direction: column; align-items: flex-start; }
+    .navlinks { width: 100%; justify-content: flex-start; }
+    .step { grid-template-columns: 1fr; gap: 12px; }
+    .step-num { margin-bottom: 8px; }
   }
 </style>
 </head>
 <body>
 
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="topbar-ip">
+      <span class="ip-tag">IP: nationsmp.net</span>
+      <span class="ip-desc">A 1:1500 scale Earth server. Read the instructions before you join.</span>
+    </div>
+    <button class="topbar-btn" onclick="window.open('#','_blank')">DISCORD</button>
+  </div>
+</div>
+
 <header>
   <nav>
-    <div class="brand">NATIONS<span>SMP</span></div>
+    <div class="brand">NATION<span>SMP</span></div>
     <div class="navlinks">
-      <a href="#territory">Territory</a>
-      <a href="#systems">Systems</a>
-      <a href="#manual">Field Manual</a>
-      <a href="#comms">Comms</a>
+      <button class="navlink active" data-panel="home">Home</button>
+      <button class="navlink" data-panel="instructions">How to join</button>
+      <button class="navlink" data-panel="towny">Towny</button>
+      <button class="navlink" data-panel="economy">Economy</button>
+      <button class="navlink" data-panel="military">Military</button>
+      <button class="navlink" data-panel="rules">Rules</button>
     </div>
   </nav>
 </header>
 
-<section class="hero">
-  <div class="topo"></div>
-  <div class="wrap hero-inner">
-    <div class="eyebrow">Status &mdash; Recruiting Nations</div>
+<div class="wrap">
+
+  <section class="panel active" id="home">
     <h1>Claim your ground.<br>Build your <span class="accent">nation</span>.</h1>
-    <p class="lede">A 1:1500 scale recreation of Earth. Real terrain, real borders, real consequences. Found a town, forge a nation, and defend it with a modern arsenal.</p>
-
-    <div class="coord-box">
-      <span class="coord-label">SERVER ADDRESS</span>
-      <span class="coord-value" id="server-ip">nationsmp.net</span>
-      <button class="copy-btn" onclick="copyIP()" id="copy-btn">COPY</button>
-    </div>
-
+    <p class="lede">A 1:1500 scale recreation of Earth. Real terrain, real borders, real consequences.</p>
     <div class="cta-row">
-      <a href="#manual" class="btn btn-primary">How to join</a>
-      <a href="#comms" class="btn btn-ghost">Join comms</a>
+      <button class="btn btn-primary" onclick="showPanel('instructions')">How to join</button>
+      <button class="btn btn-ghost" onclick="window.open('#','_blank')">Discord</button>
     </div>
-  </div>
-</section>
 
-<section class="section" id="territory">
-  <div class="wrap">
-    <div class="section-label">01 — The Territory</div>
-    <h2>One world. Every border where it really is.</h2>
-    <p class="section-desc">The map is a 1:1500 replica of the actual Earth, built from real elevation and vegetation data. Every coastline, mountain range, and river sits where it does in reality — scaled down, not simplified.</p>
     <div class="stat-grid">
-      <div class="stat"><div class="stat-num">1:1500</div><div class="stat-label">Map scale</div></div>
-      <div class="stat"><div class="stat-num">~26,700</div><div class="stat-label">Blocks, east&ndash;west</div></div>
-      <div class="stat"><div class="stat-num">~13,300</div><div class="stat-label">Blocks, north&ndash;south</div></div>
-      <div class="stat"><div class="stat-num">100GB</div><div class="stat-label">World storage</div></div>
+      <div class="stat"><div class="stat-num">1:1500</div><div class="stat-label">MAP SCALE</div></div>
     </div>
-  </div>
-</section>
 
-<section class="section" id="systems">
-  <div class="wrap">
-    <div class="section-label">02 — Systems</div>
-    <h2>Six systems. One economy.</h2>
-    <p class="section-desc">Everything on the server feeds the same currency. What you earn mining, farming, or trading pays for land, weapons, and vehicles.</p>
-    <div class="systems">
-      <div class="system-card">
-        <div class="system-num">SYS.01</div>
-        <div class="system-title">Nations &amp; Towns</div>
-        <div class="system-desc">Found a town, join a nation, or conquer one. Land claims, taxation, and diplomacy run on Towny.</div>
-      </div>
-      <div class="system-card">
-        <div class="system-num">SYS.02</div>
-        <div class="system-title">Modern arsenal</div>
-        <div class="system-desc">Over 50 firearms with real ballistics, attachments, and craftable ammunition. Sidearms to anti-materiel rifles.</div>
-      </div>
-      <div class="system-card">
-        <div class="system-num">SYS.03</div>
-        <div class="system-title">Vehicles</div>
-        <div class="system-desc">Tanks, helicopters, and fighter jets for the front line. Tractors and harvesters for the home front.</div>
-      </div>
-      <div class="system-card">
-        <div class="system-num">SYS.04</div>
-        <div class="system-title">Frontier economy</div>
-        <div class="system-desc">A player-driven shop and job system. Get paid for mining, farming, and building &mdash; then spend it on gear.</div>
-      </div>
-      <div class="system-card">
-        <div class="system-num">SYS.05</div>
-        <div class="system-title">Field comms</div>
-        <div class="system-desc">Proximity voice chat. Coordinate a raid or negotiate a border without leaving the game.</div>
-      </div>
-      <div class="system-card">
-        <div class="system-num">SYS.06</div>
-        <div class="system-title">Live map</div>
-        <div class="system-desc">A real-time 3D map of the world, updated as it's explored and settled.</div>
-      </div>
+    <h2 style="margin-top:64px;">Explore</h2>
+    <div class="cat-grid">
+      <button class="cat-card" onclick="showPanel('towny')">
+        <div class="cat-tag">CAT.01</div>
+        <div class="cat-title">Nations & Towns</div>
+        <div class="cat-desc">Found a town, join a nation, claim land, and manage your economy through Towny.</div>
+      </button>
+      <button class="cat-card" onclick="showPanel('economy')">
+        <div class="cat-tag">CAT.02</div>
+        <div class="cat-title">Economy</div>
+        <div class="cat-desc">A player-driven shop and job system. Earn from mining, farming, and trade.</div>
+      </button>
+      <button class="cat-card" onclick="showPanel('military')">
+        <div class="cat-tag">CAT.03</div>
+        <div class="cat-title">Military & Vehicles</div>
+        <div class="cat-desc">50+ firearms, tanks, helicopters, and jets. Defend what you've built.</div>
+      </button>
+      <button class="cat-card" onclick="showPanel('rules')">
+        <div class="cat-tag">CAT.04</div>
+        <div class="cat-title">Rules</div>
+        <div class="cat-desc">What's expected of every resident before setting foot on the map.</div>
+      </button>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section" id="manual">
-  <div class="wrap">
-    <div class="section-label">03 — Field Manual</div>
-    <h2>Get on the ground in four steps.</h2>
-    <p class="section-desc">The server runs on Minecraft Forge 1.20.1 with a small set of required mods.</p>
+  <section class="panel" id="instructions">
+    <div class="eyebrow">How to join</div>
+    <h1>In order to join, please read the instructions.</h1>
+    <p class="section-desc">The server runs Minecraft Forge 1.20.1 with a small set of required mods. Follow every step below in order.</p>
+
     <div class="steps">
       <div class="step">
         <div class="step-num"></div>
@@ -296,55 +267,123 @@
       <div class="step">
         <div class="step-num"></div>
         <div>
-          <div class="step-title">Import the modpack</div>
-          <div class="step-desc">Create a new profile on Minecraft <code>1.20.1</code> with the <code>Forge</code> loader, then add the required mods from our comms channel.</div>
+          <div class="step-title">Create a custom profile</div>
+          <div class="step-desc">Minecraft version <code>1.20.1</code>, modloader <code>Forge</code>.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-num"></div>
         <div>
-          <div class="step-title">Launch the game</div>
-          <div class="step-desc">Hit play. Forge and every mod load automatically.</div>
+          <div class="step-title">Add the required mods</div>
+          <div class="step-desc">Grab the mod list from our Discord and drop them into the profile's mods folder. <strong>Or just simply take our finished Profile Folder and all you do is press Start, simple as that.</strong></div>
         </div>
       </div>
       <div class="step">
         <div class="step-num"></div>
         <div>
-          <div class="step-title">Connect</div>
-          <div class="step-desc">Multiplayer &rarr; Add server &rarr; enter <code>nationsmp.net</code>.</div>
+          <div class="step-title">Launch and connect</div>
+          <div class="step-desc">Hit play, then Multiplayer &rarr; Add server &rarr; <code>nationsmp.net</code>.</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<section class="comms" id="comms">
-  <div class="wrap">
-    <div class="section-label">04 — Comms</div>
-    <h2>Coordinate with the rest of the world.</h2>
-    <p class="section-desc" style="margin-left:auto; margin-right:auto;">Get the modpack, ask questions, and find your nation before you land.</p>
-    <div class="comms-row">
-      <a href="#" class="btn btn-primary">Join Discord</a>
-      <a href="#" class="btn btn-ghost">Forum — coming soon</a>
+    <div class="warn-box">
+      <span class="mc">NOTE</span>
+      Joining without the required mods will disconnect you on login. Get the mod list in Discord first.
     </div>
-  </div>
-</section>
+
+    <div class="cta-row" style="margin-top:40px;">
+      <button class="btn btn-primary" onclick="window.open('#','_blank')">Get mods on Discord</button>
+    </div>
+  </section>
+
+  <section class="panel" id="towny">
+    <div class="eyebrow">Category 01</div>
+    <h1>Nations & Towns</h1>
+    <p class="section-desc">Land, government, and diplomacy run on Towny.</p>
+    <h3>Founding a town</h3>
+    <p class="section-desc"><code class="mono">/town new [name]</code> claims your first plot. Invite residents, set taxes, and grow.</p>
+    <h3>Forming a nation</h3>
+    <p class="section-desc">Once your town is established, unite with others under <code class="mono">/nation new [name]</code> to pool land, defense, and diplomacy.</p>
+    <button class="btn btn-ghost" onclick="showPanel('home')">&larr; Back to Home</button>
+  </section>
+
+  <section class="panel" id="economy">
+    <div class="eyebrow">Category 02</div>
+    <h1>Economy</h1>
+    <p class="section-desc">Every job feeds the same currency. What you earn mining, farming, or trading pays for land, weapons, and vehicles.</p>
+    <h3>Earning</h3>
+    <p class="section-desc">Take a job — mining, farming, woodcutting — and get paid per action, with pay scaling as you level up.</p>
+    <h3>Spending</h3>
+    <p class="section-desc">Buy and sell through the player shop, or trade directly with other towns.</p>
+    <button class="btn btn-ghost" onclick="showPanel('home')">&larr; Back to Home</button>
+  </section>
+
+  <section class="panel" id="military">
+    <div class="eyebrow">Category 03</div>
+    <h1>Military & Vehicles</h1>
+    <p class="section-desc">Modern firearms and vehicles, built for both defense and the frontier.</p>
+    <h3>Arsenal</h3>
+    <p class="section-desc">50+ firearms with real ballistics, attachments, and craftable ammunition — sidearms to anti-materiel rifles.</p>
+    <h3>Vehicles</h3>
+    <p class="section-desc">Tanks, helicopters, and fighter jets for the front line. Tractors and harvesters for the home front.</p>
+    <button class="btn btn-ghost" onclick="showPanel('home')">&larr; Back to Home</button>
+  </section>
+
+  <section class="panel" id="rules">
+    <div class="eyebrow">Category 04</div>
+    <h1>Rules</h1>
+    <p class="section-desc">Please read and respect these core rules carefully before joining.</p>
+    
+    <h3>1. Ideology & Conduct</h3>
+    <p class="section-desc">Ingame, follow your ideology. If it is extremism, that is okay for roleplay purposes, but you are not allowed to use racial slurs under any circumstances.</p>
+    
+    <h3>2. Zero Tolerance for Threats</h3>
+    <p class="section-desc">Any kind of threats, like doxxing or disturbing behavior, will be punished by a Community Ban with no chance of appeal.</p>
+    
+    <h3>3. No Unfair Advantages</h3>
+    <p class="section-desc">X-Ray and the use of any third-party advantage is forbidden. This counts for cheats as well. Shaders or custom textures are allowed as long as they do not give an unfair advantage like X-Ray.</p>
+    
+    <h3>4. Reporting Players</h3>
+    <p class="section-desc">If you want to report someone, do not DM staff members. Please use the Ticket System and always provide evidence.</p>
+    
+    <button class="btn btn-ghost" onclick="showPanel('home')" style="margin-top: 15px;">&larr; Back to Home</button>
+  </section>
+
+</div>
 
 <footer>
   <div class="wrap">
-    <div class="footer-mark">NATIONSSMP &mdash; EST. 2026 &mdash; nationsmp.net</div>
+    <div class="footer-mark">NATION SMP — nationsmp.net</div>
   </div>
 </footer>
 
 <script>
-function copyIP(){
-  navigator.clipboard.writeText('nationsmp.net').then(function(){
-    var btn = document.getElementById('copy-btn');
-    var original = btn.textContent;
-    btn.textContent = 'COPIED';
-    setTimeout(function(){ btn.textContent = original; }, 1600);
+function showPanel(id) {
+  // Remove active class from all panels to reset animation
+  document.querySelectorAll('.panel').forEach(function(p) { 
+    p.classList.remove('active'); 
   });
+  
+  // Add active class to target panel to trigger CSS animation
+  setTimeout(() => {
+    document.getElementById(id).classList.add('active');
+  }, 10);
+  
+  // Update nav link states
+  document.querySelectorAll('.navlink').forEach(function(n) { 
+    n.classList.remove('active'); 
+  });
+  var navBtn = document.querySelector('.navlink[data-panel="'+id+'"]');
+  if(navBtn) { navBtn.classList.add('active'); }
+  
+  // Smooth scroll to top
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
+
+document.querySelectorAll('.navlink').forEach(function(btn) {
+  btn.addEventListener('click', function() { showPanel(btn.getAttribute('data-panel')); });
+});
 </script>
 
 </body>
