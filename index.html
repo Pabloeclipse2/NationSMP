@@ -21,6 +21,7 @@
     --line: rgba(227, 187, 52, 0.15);
     --green: #4A7A2C;
     --glow: rgba(227, 187, 52, 0.2);
+    --alert: #e63946;
   }
   
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,6 +40,23 @@
   a:hover { color: #fff; }
   
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+  /* Alpha Banner */
+  .alpha-banner {
+    background: rgba(230, 57, 70, 0.1);
+    border-bottom: 1px solid rgba(230, 57, 70, 0.3);
+    color: #ff6b6b;
+    text-align: center;
+    padding: 10px 16px;
+    font-family: 'Minecraft', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(230, 57, 70, 0.1) inset;
+  }
+  .alpha-banner span {
+    color: #fff;
+  }
 
   /* Topbar */
   .topbar {
@@ -188,13 +206,17 @@
 </head>
 <body>
 
+<div class="alpha-banner">
+  ⚠️ <span>Server is still in work joining won't work!</span> Alpha Stage ⚠️
+</div>
+
 <div class="topbar">
   <div class="wrap topbar-inner">
     <div class="topbar-ip">
       <span class="ip-tag">IP: nationsmp.net</span>
       <span class="ip-desc">A 1:1500 scale Earth server. Read the instructions before you join.</span>
     </div>
-    <button class="topbar-btn" onclick="window.open('#','_blank')">DISCORD</button>
+    <button class="topbar-btn" onclick="window.open('https://discord.gg/fXu8zmd7nn','_blank')">DISCORD</button>
   </div>
 </div>
 
@@ -219,7 +241,7 @@
     <p class="lede">A 1:1500 scale recreation of Earth. Real terrain, real borders, real consequences.</p>
     <div class="cta-row">
       <button class="btn btn-primary" onclick="showPanel('instructions')">How to join</button>
-      <button class="btn btn-ghost" onclick="window.open('#','_blank')">Discord</button>
+      <button class="btn btn-ghost" onclick="window.open('https://discord.gg/fXu8zmd7nn','_blank')">Discord</button>
     </div>
 
     <div class="stat-grid">
@@ -293,7 +315,7 @@
     </div>
 
     <div class="cta-row" style="margin-top:40px;">
-      <button class="btn btn-primary" onclick="window.open('#','_blank')">Get mods on Discord</button>
+      <button class="btn btn-primary" onclick="window.open('https://discord.gg/fXu8zmd7nn','_blank')">Get mods on Discord</button>
     </div>
   </section>
 
