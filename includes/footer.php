@@ -1,6 +1,6 @@
 <footer class="site-footer">
     <div class="wrapper">
-        <p><img src="/assets/img/logo.png" alt="<?= e(SERVER_NAME) ?> Logo" class="footer-logo">&copy; <?= date('Y') ?> <?= e(SERVER_NAME) ?>. Not affiliated with Mojang AB.</p>
+        <p>&copy; <?= date('Y') ?> <?= e(SERVER_NAME) ?>. Not affiliated with Mojang AB.</p>
         <p>
             <a href="/index.php?page=home">Home</a> ·
             <a href="/index.php?page=forum">Forum</a> ·
