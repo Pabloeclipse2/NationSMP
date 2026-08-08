@@ -13,13 +13,18 @@ $user = current_user();
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
 </head>
 <body>
 
 <header class="site-header">
     <nav class="nav">
         <a href="/index.php?page=home" class="brand">
-            <span class="brand-mark">⛏️</span>
+            <span class="brand-mark"><img src="/assets/img/logo.png" alt="<?= e(SERVER_NAME) ?> Logo"></span>
             <?= e(SERVER_NAME) ?>
         </a>
 
